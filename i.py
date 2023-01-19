@@ -25,7 +25,7 @@ model = mrcnn.model.MaskRCNN(mode="inference",
 model.load_weights(filepath="mask_rcnn_coco.h5",
                    by_name=True)
 
-image = cv2.imread("karokrasinska-pFPehlRo_yA-unsplash.jpg")
+image = cv2.imread("image.jpg")
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 r = model.detect([image], verbose=0)
