@@ -1,13 +1,12 @@
-use pyo3::prelude::*;
 use image::io::Reader as ImageReader;
-
+use pyo3::prelude::*;
 
 pub type Root = Vec<Vec<[bool; 2]>>;
 
 #[pyfunction]
 fn process_image(image: String, json: String, out_path: Option<String>) -> PyResult<()> {
     let value = serde_json::from_str::<Root>(&json).unwrap();
-    let mut img = ImageReader::open(format!("./{}", image))
+    let mut img = ImageReader::open(format!("./{image}"))
         .unwrap()
         .decode()
         .unwrap()
@@ -17,7 +16,7 @@ fn process_image(image: String, json: String, out_path: Option<String>) -> PyRes
 
     for row in value.into_iter() {
         for (col, pix) in row.into_iter().zip(&mut img_iter) {
-            if col != [false, false] {
+            if col == [false, false] {
                 *pix = image::Rgba([0, 0, 0, 0]);
             }
         }
